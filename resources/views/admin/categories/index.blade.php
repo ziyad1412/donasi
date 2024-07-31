@@ -25,7 +25,8 @@
                         </div>
                         <div class="hidden md:flex flex-col">
                             <p class="text-slate-500 text-sm">Date</p>
-                            <h3 class="text-indigo-950 text-xl font-bold">{{ $category->created_at }}</h3>
+                            <h3 class="text-indigo-950 text-xl font-bold">{{ $category->created_at->format('d F Y') }}
+                            </h3>
                         </div>
                         <div class="hidden md:flex flex-row items-center gap-x-3">
                             <a href="{{ route('admin.categories.edit', $category) }}"
