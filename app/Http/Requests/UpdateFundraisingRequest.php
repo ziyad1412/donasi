@@ -11,7 +11,7 @@ class UpdateFundraisingRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return $this->user()->hasAnyRole(['fundraiser']);
     }
 
     /**
@@ -22,7 +22,11 @@ class UpdateFundraisingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['required', 'string', 'max:255'],
+            'category_id' => ['required', 'integer'],
+            'target_amount' => ['required', 'integer'],
+            'about' => ['required', 'string', 'max:65535'],
+            'thumbnail' => ['sometimes', 'image', 'mimes:jpeg,png,jpg'],
         ];
     }
 }

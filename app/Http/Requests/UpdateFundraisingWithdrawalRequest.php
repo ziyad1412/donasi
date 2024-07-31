@@ -11,7 +11,7 @@ class UpdateFundraisingWithdrawalRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return $this->user()->hasAnyRole(['owner']);
     }
 
     /**
@@ -22,7 +22,8 @@ class UpdateFundraisingWithdrawalRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            //proof
+            'proof' => ['required', 'image', 'mimes:jpeg,png,jpg'],
         ];
     }
 }

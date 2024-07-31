@@ -11,7 +11,8 @@ class StoreFundraisingWithdrawalRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        //user hasanyrole fundraiser
+        return $this->user()->hasAnyRole(['owner|fundraiser']);
     }
 
     /**
@@ -22,7 +23,10 @@ class StoreFundraisingWithdrawalRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            //bank_name, bank_account_name, bank_account_number
+            'bank_name' => ['required', 'string', 'max:255'],
+            'bank_account_name' => ['required', 'string', 'max:255'],
+            'bank_account_number' => ['required', 'string', 'max:255'],
         ];
     }
 }

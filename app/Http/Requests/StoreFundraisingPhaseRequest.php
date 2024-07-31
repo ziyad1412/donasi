@@ -11,7 +11,8 @@ class StoreFundraisingPhaseRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        //user hasanyrole fundraiser
+        return $this->user()->hasAnyRole(['fundraiser']);
     }
 
     /**
@@ -22,7 +23,10 @@ class StoreFundraisingPhaseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            //name,notes,photo
+            'name' => ['required', 'string', 'max:255'],
+            'notes' => ['required', 'string', 'max:65535'],
+            'photo' => ['required', 'image', 'mimes:jpeg,png,jpg'],
         ];
     }
 }
