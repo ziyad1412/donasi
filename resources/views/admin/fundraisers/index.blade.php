@@ -37,7 +37,8 @@
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"
-                                            class="font-bold py-4 px-6 bg-red-700 text-white rounded-full">
+                                            class="font-bold py-4 px-6 bg-red-700 text-white rounded-full"
+                                            onclick="return confirm('Are you sure you want to delete this fundraiser?')">
                                             Delete
                                         </button>
                                     </form>

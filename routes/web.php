@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DonaturController;
+use App\Http\Controllers\FrontController;
 use App\Http\Controllers\FundraiserController;
 use App\Http\Controllers\FundraisingController;
 use App\Http\Controllers\FundraisingPhaseController;
@@ -20,19 +21,24 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+// Front controller
+Route::get('/', [FrontController::class, 'index'])->name('front.index');
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/category/{category}', [FrontController::class, 'category'])->name('front.category');
+Route::get('/details/{fundraising:slug}', [FrontController::class, 'details'])->name('front.details');
+Route::get('/support/{fundraising:slug}', [FrontController::class, 'support'])->name('front.support');
+Route::get('/checkout/{fundraising:slug}/{totalAmountDonation}', [FrontController::class, 'checkout'])->name('front.checkout');
+Route::post('/checkout/store/{fundraising: slug}/{totalAmountDonation}', [FrontController::class, 'store'])->name('front.store');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     //prefix admin name admin group
     Route::prefix('admin')->name('admin.')->group(function () {
@@ -62,7 +68,7 @@ Route::middleware('auth')->group(function () {
         //get my-withdrawals, DashboardController, my_withdrawals,name
         Route::get('my-withdrawals', [DashboardController::class, 'my_withdrawals'])->name('my-withdrawals');
         //get my-withdrawals/details/{FundraisingWithdrawal}, DashboardController, my_withdrawals_details,name
-        Route::get('my-withdrawals/details/{fundraising_withdrawal}', [DashboardController::class, 'my_withdrawals_details'])->name('my_withdrawals.details');
+        Route::get('my-withdrawals/details/{fundraising_withdrawal}', [DashboardController::class, 'my_withdrawals_details'])->name('my-withdrawals.details');
     });
 });
 

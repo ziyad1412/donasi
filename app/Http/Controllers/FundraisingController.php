@@ -94,7 +94,9 @@ class FundraisingController extends Controller
         if ($percentage > 100) {
             $percentage = 100;
         }
-        return view('admin.fundraisings.show', compact('fundraising', 'goalReached', 'totalDonations', 'percentage'));
+        //
+        $hasRequestedWithdrawal = $fundraising->withdrawals()->exists();
+        return view('admin.fundraisings.show', compact('hasRequestedWithdrawal', 'fundraising', 'goalReached', 'totalDonations', 'percentage'));
     }
 
     /**
